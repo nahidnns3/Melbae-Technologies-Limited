@@ -1,0 +1,461 @@
+@import "tailwindcss";
+
+/*
+  Melbae corporate design tokens.
+
+  Direction: "Ordered fields" — a warm paper ground, ink typography, hairline
+  rules, and a single oxide accent used at small area. Product worlds (Basha OS
+  today) get their own accent slot inside a defined product frame.
+
+  Tailwind v4 is CSS-first: anything declared inside @theme becomes a utility
+  (bg-paper, text-ink, border-line, ...). Runtime-overridable values (type
+  scale) are declared as plain custom properties and referenced via
+  @theme inline.
+*/
+
+@theme {
+  /* ---- Colour: grounds and surfaces ---- */
+  --color-paper: #f6f4ee;
+  --color-paper-elevated: #ffffff;
+  --color-surface: #ede9df;
+  --color-surface-strong: #e3ded1;
+
+  /* ---- Colour: text ---- */
+  --color-ink: #17191d;
+  --color-ink-secondary: #454850;
+  --color-ink-muted: #5c606a;
+
+  /* ---- Colour: lines ---- */
+  --color-line: #d9d4c8;
+  --color-line-strong: #aca597;
+
+  /* ---- Colour: Melbae accent (oxide) ---- */
+  --color-accent: #c2401a;
+  --color-accent-hover: #a63414;
+  --color-accent-ink: #9a3012;
+  --color-accent-soft: #f4dcd2;
+
+  /* ---- Colour: interactive & states ---- */
+  --color-focus: #1f4fd8;
+  --color-success: #1f7a4d;
+  --color-warning: #9a6a0b;
+  --color-error: #b3261e;
+  --color-info: #2b4fb8;
+
+  /* ---- Colour: ink sections (dark editorial ground) ---- */
+  --color-ink-ground: #17191d;
+  --color-ink-ground-elevated: #22252b;
+  --color-ink-line: #363a42;
+  --color-paper-on-ink: #f1efe8;
+  --color-paper-on-ink-muted: #b4b2aa;
+
+  /* ---- Colour: Basha OS product accent slot ---- */
+  --color-basha-ground: #1c2420;
+  --color-basha-surface: #29332d;
+  --color-basha-line: #3f4a43;
+  --color-basha-text: #ecefea;
+  --color-basha-muted: #a8b0aa;
+  --color-basha-accent: #6fcf97;
+  --color-basha-accent-deep: #1f8a55;
+  --color-basha-accent-ink: #0f5033;
+
+  /* ---- Type families (variables injected by next/font in app/layout.tsx) ---- */
+  --font-display: var(--font-display-var), "Helvetica Neue", Arial, sans-serif;
+  --font-body: var(--font-body-var), Georgia, "Times New Roman", serif;
+  --font-bangla: var(--font-bangla-var), "Noto Sans Bengali", sans-serif;
+
+  /* ---- Radius ---- */
+  --radius-none: 0;
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* ---- Shadow (used sparingly: product frames, menus) ---- */
+  --shadow-frame:
+    0 1px 0 rgba(23, 25, 29, 0.06), 0 24px 48px -24px rgba(23, 25, 29, 0.28);
+  --shadow-menu: 0 12px 32px -12px rgba(23, 25, 29, 0.32);
+
+  /* ---- Motion ---- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- Layout ---- */
+  --container-content: 76rem; /* 1216px */
+  --container-wide: 86rem; /* 1376px */
+  --container-prose: 40rem; /* ~68ch at 17px serif */
+  --breakpoint-xs: 26rem;
+}
+
+:root {
+  --dur-micro: 160ms;
+  --dur-entrance: 480ms;
+  --dur-draw: 900ms;
+
+  /* Type scale: mobile values first, enlarged from 48rem. */
+  --text-display-size: 2.5rem;
+  --text-display-leading: 1.04;
+  --text-h1-size: 2.125rem;
+  --text-h1-leading: 1.06;
+  --text-h2-size: 1.75rem;
+  --text-h2-leading: 1.12;
+  --text-h3-size: 1.375rem;
+  --text-h3-leading: 1.22;
+  --text-h4-size: 1.125rem;
+  --text-h4-leading: 1.3;
+  --text-lead-size: 1.1875rem;
+  --text-lead-leading: 1.55;
+  --text-body-size: 1.0625rem;
+  --text-body-leading: 1.65;
+  --text-small-size: 0.9375rem;
+  --text-small-leading: 1.55;
+  --text-caption-size: 0.8125rem;
+  --text-caption-leading: 1.45;
+  --text-label-size: 0.75rem;
+  --text-label-leading: 1.2;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --text-display-size: 3.5rem;
+    --text-h1-size: 3rem;
+    --text-h2-size: 2.25rem;
+    --text-h3-size: 1.5rem;
+    --text-lead-size: 1.3125rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --text-display-size: 4.25rem;
+    --text-h1-size: 3.5rem;
+    --text-h2-size: 2.5rem;
+  }
+}
+
+@theme inline {
+  --text-display: var(--text-display-size);
+  --text-display--line-height: var(--text-display-leading);
+  --text-display--letter-spacing: -0.025em;
+  --text-h1: var(--text-h1-size);
+  --text-h1--line-height: var(--text-h1-leading);
+  --text-h1--letter-spacing: -0.022em;
+  --text-h2: var(--text-h2-size);
+  --text-h2--line-height: var(--text-h2-leading);
+  --text-h2--letter-spacing: -0.018em;
+  --text-h3: var(--text-h3-size);
+  --text-h3--line-height: var(--text-h3-leading);
+  --text-h3--letter-spacing: -0.012em;
+  --text-h4: var(--text-h4-size);
+  --text-h4--line-height: var(--text-h4-leading);
+  --text-h4--letter-spacing: -0.008em;
+  --text-lead: var(--text-lead-size);
+  --text-lead--line-height: var(--text-lead-leading);
+  --text-body: var(--text-body-size);
+  --text-body--line-height: var(--text-body-leading);
+  --text-small: var(--text-small-size);
+  --text-small--line-height: var(--text-small-leading);
+  --text-caption: var(--text-caption-size);
+  --text-caption--line-height: var(--text-caption-leading);
+  --text-label: var(--text-label-size);
+  --text-label--line-height: var(--text-label-leading);
+  --text-label--letter-spacing: 0.08em;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Base                                                                     */
+/* ---------------------------------------------------------------------- */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+    font-feature-settings:
+      "kern",
+      "liga",
+      "onum" 0,
+      "pnum";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  :lang(bn) {
+    font-family: var(--font-bangla);
+  }
+
+  ::selection {
+    background: var(--color-accent-soft);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
+  a {
+    text-underline-offset: 0.16em;
+    text-decoration-thickness: 1px;
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Utilities and compositions                                               */
+/* ---------------------------------------------------------------------- */
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+@utility font-body {
+  font-family: var(--font-body);
+}
+
+@utility font-bangla {
+  font-family: var(--font-bangla);
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Eyebrow label: small tracked uppercase in the display face. */
+@utility eyebrow {
+  font-family: var(--font-display);
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-leading);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-ink-secondary);
+}
+
+/* Horizontal container with responsive side gutters. */
+@utility container-content {
+  width: 100%;
+  max-width: var(--container-content);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (min-width: 48rem) {
+    padding-inline: 2rem;
+  }
+  @media (min-width: 64rem) {
+    padding-inline: 3rem;
+  }
+}
+
+@utility container-wide {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (min-width: 48rem) {
+    padding-inline: 2rem;
+  }
+  @media (min-width: 64rem) {
+    padding-inline: 3rem;
+  }
+}
+
+/* Vertical rhythm for top-level sections. */
+@utility section-y {
+  padding-block: 4rem;
+  @media (min-width: 48rem) {
+    padding-block: 5.5rem;
+  }
+  @media (min-width: 64rem) {
+    padding-block: 7rem;
+  }
+}
+
+@utility section-y-sm {
+  padding-block: 3rem;
+  @media (min-width: 48rem) {
+    padding-block: 4rem;
+  }
+  @media (min-width: 64rem) {
+    padding-block: 5rem;
+  }
+}
+
+/* Prose measure for long-form copy. */
+@utility measure {
+  max-width: var(--container-prose);
+}
+
+/* Hairline rule between stacked items. */
+@utility rule-t {
+  border-top: 1px solid var(--color-line);
+}
+
+@utility rule-b {
+  border-bottom: 1px solid var(--color-line);
+}
+
+/* Inline text link with the site's underline behaviour. */
+@utility link {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-line-strong);
+  transition: text-decoration-color var(--dur-micro) var(--ease-standard);
+  &:hover {
+    text-decoration-color: var(--color-accent);
+  }
+}
+
+@utility link-on-ink {
+  color: var(--color-paper-on-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-ink-line);
+  transition: text-decoration-color var(--dur-micro) var(--ease-standard);
+  &:hover {
+    text-decoration-color: var(--color-paper-on-ink);
+  }
+}
+
+/* Long-form legal / article prose. */
+@utility prose-legal {
+  & h2 {
+    font-size: var(--text-h3-size);
+    line-height: var(--text-h3-leading);
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+  & h3 {
+    font-size: var(--text-h4-size);
+    line-height: var(--text-h4-leading);
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+  & p {
+    margin-bottom: 1rem;
+  }
+  & ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  & li {
+    margin-bottom: 0.375rem;
+  }
+  & a {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-line-strong);
+  }
+  & a:hover {
+    text-decoration-color: var(--color-accent);
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Motion                                                                   */
+/* ---------------------------------------------------------------------- */
+
+@keyframes mb-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mb-draw {
+  from {
+    stroke-dashoffset: var(--draw-length, 600);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes mb-settle {
+  from {
+    opacity: 0;
+    transform: translate(var(--from-x, 0), var(--from-y, 0)) rotate(var(--from-r, 0deg));
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes mb-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@utility rise {
+  animation: mb-rise var(--dur-entrance) var(--ease-out) both;
+}
+
+@utility rise-1 {
+  animation: mb-rise var(--dur-entrance) var(--ease-out) 80ms both;
+}
+
+@utility rise-2 {
+  animation: mb-rise var(--dur-entrance) var(--ease-out) 160ms both;
+}
+
+@utility rise-3 {
+  animation: mb-rise var(--dur-entrance) var(--ease-out) 240ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
